@@ -1,0 +1,32 @@
+<nav>
+    <div class="nav-links-container">
+        <a>Your Recipes</a>
+        <a>About Us</a>
+        <a>Generate</a>
+        <a>Logout</a>
+    </div>
+</nav>
+
+<h2>Select Your Ingredients</h2>
+
+    <div id="categories">
+        <% categories.forEach((category, index)=> { %>
+            <div class="category">
+                <button type="button" class="toggle-button" data-index="<%= index %>"><%= category.name %></button>
+                <div class="input-container" id="input-container-<%= index %>">
+                    
+                    <form class="ingredient-form">
+                        <label for="ingredient-input">Enter as many ingredients as you like!</label>
+                        <p>Example: <%= category.examples %></p>
+                        <input class="ingredient-input" id="ingredient-input" data-category="<%= category.name %>" placeholder="Enter ingredients separated by commas..."></input>
+                        <button class="ingredient-submit-btn" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+    
+        <button type="submit" class="submit-ingredients-btn">Submit</button>
+    
+
+

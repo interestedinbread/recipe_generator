@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title><%= title %></title>
+</head>
+<body>
+    <div class="ejs-content-container">
+        <%- body %>
+        <% if(page === 'ingredients') { %>
+            <script src='/ingredients.js'></script>
+       <% } %>
+        <% if(page === 'results') { %>
+            <script src='/results.js'></script>
+       <% } %>
+        
+    </div>
+</body>
+</html>

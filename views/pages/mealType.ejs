@@ -1,0 +1,19 @@
+<nav>
+    <div class="nav-links-container">
+        <a>Your Recipes</a>
+        <a>About Us</a>
+        <a>Generate</a>
+        <a>Logout</a>
+    </div>
+</nav>
+
+<form action="/recipe/ingredients" method="GET">
+    <label>What are you in the mood for?</label>
+    <div class="mealtype-btns-container">
+        <button type="submit" name="mealType" value="breakfast">Breakfast</button>
+        <button type="submit" name="mealType" value="lunch">Lunch</button>
+        <button type="submit" name="mealType" value="dinner">Dinner</button>
+        <button type="submit" name="mealType" value="dessert">Dessert</button>
+        <button type="submit" name="mealType" value="snack">Snack</button>
+    </div>
+</form>

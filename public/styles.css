@@ -1,0 +1,9 @@
+
+.input-container, .recipe-details-container {
+    display: none;
+}
+
+.input-container.hidden, .recipe-details-container.hidden{
+    display: block;
+}
+

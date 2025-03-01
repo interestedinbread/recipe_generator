@@ -1,0 +1,25 @@
+### post request to /register endpoint
+
+POST http://localhost:3030/auth/register
+Content-Type: application/json
+
+{
+    "username": "dorg_dogson",
+    "email": "dogson@gmail.com",
+    "password": "dogson1234"
+}
+
+### post request to /login endpoint
+
+POST http://localhost:3030/auth/login
+Content-Type: application/json
+
+{
+    "email": "dogson@gmail.com",
+    "password": "dogson1234"
+}
+
+### get request to /mealtype endpoint (protected)
+
+GET http://localhost:3030/recipe/mealtype
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0MDI0MzIzMiwiZXhwIjoxNzQwMjQ2ODMyfQ.TslwcpseAcXeOvYhKZhfV0hLxRPQr4Ul2BQJ09R8tdQ
