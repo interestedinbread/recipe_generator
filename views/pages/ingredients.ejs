@@ -7,26 +7,24 @@
     </div>
 </nav>
 
-<h2>Select Your Ingredients</h2>
+<h2 class="ingredients-page-h2">Select your ingredients</h2>
 
-    <div id="categories">
-        <% categories.forEach((category, index)=> { %>
-            <div class="category">
-                <button type="button" class="toggle-button" data-index="<%= index %>"><%= category.name %></button>
-                <div class="input-container" id="input-container-<%= index %>">
-                    
-                    <form class="ingredient-form">
-                        <label for="ingredient-input">Enter as many ingredients as you like!</label>
-                        <p>Example: <%= category.examples %></p>
-                        <input class="ingredient-input" id="ingredient-input" data-category="<%= category.name %>" placeholder="Enter ingredients separated by commas..."></input>
-                        <button class="ingredient-submit-btn" type="submit">Submit</button>
-                    </form>
-                </div>
-            </div>
-        <% }); %>
+<p class="user-tip">Enter as many (or as few) items as you want! ANY food item in your home will do.</p>
+
+    <div class="input-container">
+        <form class="ingredient-input form">
+        <input type="text" class="ingredients-input" name="ingredients-input" placeholder="Enter ingredients here!">
+        <button type="submit" class="add-ingredient-btn">Submit</button>
+        </form>
+    </div>
+
+    <div class="ingredients-list-container">
+        <ul class="ingredients-list"></ul>    
     </div>
     
-        <button type="submit" class="submit-ingredients-btn">Submit</button>
+    
+    <button class="generate-recipes-btn">Generate Recipes!</button>
+        
     
 
 

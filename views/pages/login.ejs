@@ -1,16 +1,17 @@
-<h1>Recipe Generator</h1>
-<h3>Welcome!</h3>
+<div class="page-content-div">
+    <h3>Welcome!</h3>
 
-<p>To get started, please login or create an account. It's free!</p>
+    <p class="greeting-text">To get started, please login or create an account. It's free!</p>
 
-<div class="login-container">
-    <form action="auth/login" method="post">
-        <input type="email" name="email" placeholder="email">
-        <input type="password" name="password" placeholder="password">
-        <button type="submit" class="login-submit-btn">Login</button>
-    </form>
-</div>
+    <div class="login-container">
+        <form action="auth/login" method="post" class="login-register-form">
+            <input type="email" name="email" placeholder="email">
+            <input type="password" name="password" placeholder="password">
+            <button type="submit" class="login-submit-btn">Login</button>
+        </form>
+    </div>
 
-<div class="toggle-btn-container">
-    <a href="/register">Create new user</a>
+    <div class="login-toggle-btn-container">
+        <a href="/register">Create new user</a>
+    </div>
 </div>

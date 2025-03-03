@@ -25,18 +25,7 @@ router.get('/mealType', authenticateToken, (req, res) => {
 })
 
 router.get('/ingredients', authenticateToken, (req, res) => {
-
-    const categories = [
-        {name: "Staples and dry goods", examples: "Rice, pasta, flour, beans"},
-        {name: "Spices and seasonings", examples: "Salt, pepper, cumin, paprika"},
-        {name: "Oils and fats", examples: "Olive oil, butter, coconut oil"},
-        {name: "Condiments and sauces", examples: "Soy sauce, ketchup, mustard"},
-        {name: "Dairy and refrigerated items", examples: "Milk, cheese, yogurt"},
-        {name: "Fresh produce", examples: "Carrots, apples, spinach"},
-        {name: "Proteins", examples: "Chicken, tofu, beef, lentils"}
-    ];
-
-    res.render('pages/ingredients', {title: 'Select Ingredients', page: 'ingredients', categories})
+    res.render('pages/ingredients', {title: 'Select Ingredients', page: 'ingredients'})
 })
 
 router.post('/generate', authenticateToken, async (req, res) => {

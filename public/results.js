@@ -16,13 +16,13 @@ if(storedRecipes){
     
     recipes.forEach(recipe =>{
         const recipeContainer = document.createElement('div')
-        
+        const ingredients = recipe.ingredients.join(', ');
         recipeContainer.innerHTML = `
         <button class="recipe-toggle-btn">${recipe.title}</button>
         <div class="recipe-details-container">
-            <p>Takes about ${recipe.time_required} minutes</p>
-            <p>Ingredients: ${recipe.ingredients}</p>
-            <p>Instructions: ${recipe.instructions}</p>
+            <p class="time-required">Takes about ${recipe.time_required} minutes</p>
+            <p class="recipe-instructions">Instructions: ${recipe.instructions}</p>
+            <p class="recipe-ingredients">Ingredients: ${ingredients}</p>
         </div>
         `;
 
