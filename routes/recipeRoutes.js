@@ -105,9 +105,10 @@ router.post('/save', authenticateToken, (req, res) => {
 
 router.get('/saved', authenticateToken, (req, res) => {
     const userId = req.user.userId;
-    db.query('SELECT * FROM saved_recipes WHERE userId = ?', [userId], (err, result) => {
+    db.query('SELECT * FROM saved_recipes WHERE user_id = ?', [userId], (err, result) => {
         if(err) return res.status(500).json({ message: err.message });
-        res.render('pages/savedRecipes', { page: 'savedRecipes', savedRecipes: result });
+        recipes = result;
+        res.render('pages/savedRecipes', { title: "Saved Recipes", page: 'savedRecipes', recipes });
     } )
 })
 

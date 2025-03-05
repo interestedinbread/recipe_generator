@@ -64,6 +64,10 @@ body {
     width: 30%;
 }
 
+nav {
+    margin-top: 10px;
+}
+
 .nav-links-container {
     display: flex;
     justify-content: flex-end;
@@ -72,7 +76,9 @@ body {
 
 .nav-links-container a{
     font-size: 0.7rem;
+    color: #E63946;
     margin: auto 5px;
+    text-decoration: none;
 }
 
 .mealtype-form {

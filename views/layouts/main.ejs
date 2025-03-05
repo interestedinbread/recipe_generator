@@ -10,13 +10,24 @@
     <title><%= title %></title>
 </head>
 <body>
+    <nav>
+        <div class="nav-links-container">
+            <a href="/recipe/saved">Your Recipes</a>
+            <a>About Us</a>
+            <a>Generate</a>
+            <a>Logout</a>
+        </div>
+    </nav>
     <div class="ejs-content-container">
         <%- body %>
         <% if(page === 'ingredients') { %>
-            <script src='/ingredients.js'></script>
+            <script type="module" src='/ingredients.js'></script>
        <% } %>
         <% if(page === 'results') { %>
-            <script src='/results.js'></script>
+            <script type="module" src='/results.js'></script>
+       <% } %>
+       <% if(page === 'savedRecipes') { %>
+            <script type="module" src='/savedRecipes.js'></script>
        <% } %>
         
     </div>
