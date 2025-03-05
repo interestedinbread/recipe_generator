@@ -11,7 +11,7 @@ router.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    db.query('SELECT * FROM users WHERE email = ?', [email], async (err, result) =>{
+    db.query('SELECT * FROM users WHERE email = ?', [email], (err, result) =>{
         if (err) return res.status(500).json({ message: err.message });
         if(result.length > 0) return res.status(400).json({ message: 'Sorry, this email is already registered!'});
     })

@@ -1,0 +1,21 @@
+<nav>
+    <div class="nav-links-container">
+        <a href="/recipes/saved">Your Recipes</a>
+        <a>About Us</a>
+        <a>Generate</a>
+        <a>Logout</a>
+    </div>
+</nav>
+
+<h2 class="results-page-h2">Your saved recipes</h2>
+
+<div class="saved-recipes-container">
+    <% recipes.forEach(recipe => { %>
+        <h1><%= recipe.title %></h1>
+        <h2><%= recipe.time_required %></h2>
+        <h3><%= recipe.ingredients %></h3>
+        <h4><%= recipe.instructions %></h4>
+   <% }) %>
+
+
+</div>

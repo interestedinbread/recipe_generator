@@ -80,6 +80,35 @@ router.get('/results', authenticateToken, (req, res) => {
     res.render('pages/results', {title: 'Results Page', page: 'results', mealType})
 })
 
+router.post('/save', authenticateToken, (req, res) => {
+    let { title, ingredients, time_required, instructions } = req.body.recipe;
+    const userId = req.user.userId
 
+    console.log(title, ingredients, time_required, instructions);
+
+    if(!userId || !title || !ingredients || !time_required || !instructions){
+        return res.status(400).json({ message: "Missing request parameter" })
+    }
+
+    if(Array.isArray(ingredients)){
+        ingredients = JSON.stringify(ingredients);
+    }
+
+    db.query('INSERT INTO saved_recipes (user_id, title, ingredients, time_required, instructions) VALUES (?, ?, ?, ?, ?)',
+        [userId, title, ingredients, time_required, instructions],
+        (err, result) => {
+            if(err) return res.status(500).json({ message: err.message })
+            console.log('recipe saved!')
+        }
+    )
+})
+
+router.get('/saved', authenticateToken, (req, res) => {
+    const userId = req.user.userId;
+    db.query('SELECT * FROM saved_recipes WHERE userId = ?', [userId], (err, result) => {
+        if(err) return res.status(500).json({ message: err.message });
+        res.render('pages/savedRecipes', { page: 'savedRecipes', savedRecipes: result });
+    } )
+})
 
 module.exports = router;
