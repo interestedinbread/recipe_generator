@@ -1,20 +1,36 @@
-export const renderRecipes = (data) => {
-    data.forEach((recipe, index) =>{
-        const recipeContainer = document.createElement('div')
-        recipeContainer.id = index;
-        recipeContainer.classList.add('recipe-container')
-        const ingredients = recipe.ingredients;
+export const renderRecipes = (data, isSavedRecipe = false) => {
+  return data
+    .map((recipe, index) => {
+      const recipeContainer = document.createElement("div");
+      recipeContainer.id = isSavedRecipe ? recipe.id : index;
+      recipeContainer.classList.add("recipe-container");
 
-        const recipeStepsArray = recipe.instructions.split(/\d+\.\s*/).filter(step => step.trim() !== "");
-        const instructions = `<ul>${recipeStepsArray.map(step => `<li class="recipe-step">${step}</li>`).join('')}</ul>`
-    
-        recipeContainer.innerHTML = `
+      const ingredients = isSavedRecipe
+        ? recipe.ingredients.join(", ")
+        : recipe.ingredients;
+
+      const recipeStepsArray = recipe.instructions
+        .split(/\d+\.\s*/)
+        .filter((step) => step.trim() !== "");
+      const instructions = `<ul>${recipeStepsArray
+        .map((step) => `<li class="recipe-step">${step}</li>`)
+        .join("")}</ul>`;
+
+      const buttonHtml =
+        isSavedRecipe
+          ? `<button class='recipe-delete-btn' data-id='${recipe.id}'>
+            <img src="../img/noun-delete-5866435-E63946.png" class="trash-can-icon"></img>
+            Delete
+            </button>`
+          : `<button class="recipe-save-btn">
+            <img src="../img/noun-bag-2149786-E63946.png" class="shopping-basket-icon"></img>
+                Save
+            </button>`;
+
+      recipeContainer.innerHTML = `
         <div class="recipe-btns-container">
             <button class="recipe-toggle-btn">${recipe.title}</button>
-            <button class="recipe-save-btn">
-                <img src="../img/noun-bag-2149786-E63946.png" class="shopping-basket-icon"></img>
-                Save
-            </button>
+            ${buttonHtml}
         </div>
         <div class="recipe-details-container">
             <div class="time-required-container">
@@ -41,8 +57,7 @@ export const renderRecipes = (data) => {
         </div>
         `;
 
-        return recipeContainer;
-
+      return recipeContainer.outerHTML;
     })
-}
-
+    .join("");
+};
