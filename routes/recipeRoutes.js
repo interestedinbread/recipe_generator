@@ -67,7 +67,7 @@ router.post('/generate', authenticateToken, async (req, res) => {
             function_call: { name: "generate_recipes" }
         })
         const recipes = response.choices[0].message.function_call.arguments;
-        res.json(JSON.parse(recipes));
+        res.status(200).json(JSON.parse(recipes));
         
     } catch (err) {
         console.error(err)
@@ -84,8 +84,6 @@ router.post('/save', authenticateToken, (req, res) => {
     let { title, ingredients, time_required, instructions } = req.body.recipe;
     const userId = req.user.userId
 
-    console.log(title, ingredients, time_required, instructions);
-
     if(!userId || !title || !ingredients || !time_required || !instructions){
         return res.status(400).json({ message: "Missing request parameter" })
     }
@@ -99,6 +97,7 @@ router.post('/save', authenticateToken, (req, res) => {
         (err, result) => {
             if(err) return res.status(500).json({ message: err.message })
             console.log('recipe saved!')
+            res.json({ success: true });
         }
     )
 })
@@ -107,9 +106,23 @@ router.get('/saved', authenticateToken, (req, res) => {
     const userId = req.user.userId;
     db.query('SELECT * FROM saved_recipes WHERE user_id = ?', [userId], (err, result) => {
         if(err) return res.status(500).json({ message: err.message });
-        recipes = result;
+        const recipes = result.map(recipe => ({
+            ...recipe,
+            ingredients: JSON.parse(recipe.ingredients)
+        }));
         res.render('pages/savedRecipes', { title: "Saved Recipes", page: 'savedRecipes', recipes });
     } )
+})
+
+router.delete('/delete/:id', authenticateToken, (req, res) => {
+    const userId = req.user.userId;
+    const recipeId = req.params.id;
+
+    db.query('DELETE FROM saved_recipes WHERE user_id = ? AND id = ?', [userId, recipeId], (err, result) => {
+        if(err) return res.status(500).json({ error: err.message});
+        console.log('Recipe deleted')
+        res.json({ success: true });
+    })
 })
 
 module.exports = router;

@@ -1,4 +1,25 @@
 const ingredientsList = document.querySelector('.ingredients-list');
+const spinnerContainer = document.querySelector('.loading-spinner-container')
+const spinner = document.querySelector('.loading-spinner')
+const loadingText = document.querySelector('.loading-text')
+
+window.addEventListener("pageshow", function(event) {
+    if(event.persisted) {
+        hideLoader();
+    }
+})
+
+const hideLoader = () => {
+    spinnerContainer.classList.remove('hidden');
+    spinner.classList.remove('hidden');
+    loadingText.classList.remove('hidden');
+}
+
+const showLoader = () => {
+    spinnerContainer.classList.add('hidden')
+    spinner.classList.add('hidden')
+    loadingText.classList.add('hidden')
+}
 
 let ingredients = []
 
@@ -39,6 +60,8 @@ document.querySelector('.add-ingredient-btn').addEventListener('click', (e) => {
 })
 
 document.querySelector('.generate-recipes-btn').addEventListener('click', async (req, res) => {
+    showLoader();
+
     const selectedIngredients = ingredients;
     const urlParams = new URLSearchParams(window.location.search);
     const mealType = urlParams.get("mealType");
@@ -55,18 +78,17 @@ document.querySelector('.generate-recipes-btn').addEventListener('click', async 
                 })
             if (!response.ok) {
                 throw new Error("Failed to fetch recipes")
-            }
+            } else {
             const data = await response.json();
-            console.log(data);
 
             localStorage.setItem('recipes', JSON.stringify(data.recipes));
 
             window.location.href=`/recipe/results?mealType=${mealType}`;
 
+            }
         } catch (error){
             console.error("Error:", error);
         }
-    
 })
 
 window.addEventListener('DOMContentLoaded', () => {
