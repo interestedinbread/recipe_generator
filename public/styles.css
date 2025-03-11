@@ -79,6 +79,11 @@ nav {
     color: #E63946;
     margin: auto 5px;
     text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-links-container a:hover {
+    transform: scale(1.05);
 }
 
 .mealtype-form {
@@ -224,6 +229,19 @@ nav {
     width: 90%;
     display: flex;
     justify-content: space-between;
+}
+
+.recipe-toggle-btn {
+    font-family: "Poppins";
+    /* background-color:#ebd9d9; */
+    
+    color:#E63946;
+    border: none;
+    border-radius: 5px;
+    margin: 5px 0 5px;
+    padding-right: 4px;
+    padding-left: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .recipe-save-btn {

@@ -125,4 +125,9 @@ router.delete('/delete/:id', authenticateToken, (req, res) => {
     })
 })
 
+router.get('/logout', (req, res) => {
+    res.clearCookie('token');
+    res.redirect('/');
+})
+
 module.exports = router;
