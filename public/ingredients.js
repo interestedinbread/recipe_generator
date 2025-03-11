@@ -1,4 +1,5 @@
-const ingredientsList = document.querySelector('.ingredients-list');
+const ingredientsList = document.querySelector('.ingredients-list')
+const ingredientsListContainer = document.querySelector('.ingredients-list-container')
 const spinnerContainer = document.querySelector('.loading-spinner-container')
 const spinner = document.querySelector('.loading-spinner')
 const loadingText = document.querySelector('.loading-text')
@@ -27,13 +28,13 @@ const ingredientInput = document.querySelector('.ingredients-input');
 
 const displayList = () => {
     if(ingredients.length === 0){
-        document.querySelector('.ingredients-list-container').classList.remove('hidden');
+        ingredientsListContainer.classList.remove('hidden');
         return
     }
 
     ingredientsList.innerHTML = "";
 
-    document.querySelector('.ingredients-list-container').classList.add('hidden');
+    ingredientsListContainer.classList.add('hidden');
 
     ingredients.forEach((ingredient, index) => {
         const ingredientEl = document.createElement('li');
@@ -97,8 +98,8 @@ window.addEventListener('DOMContentLoaded', () => {
             if(ingredients.length === 1){
                 ingredientsList.innerHTML = "";
             }
-            targetEl = e.target.closest('li');
-            index = targetEl.id;
+            const targetEl = e.target.closest('li');
+            const index = targetEl.id;
             ingredients.splice(index, 1);
             displayList();
         }
