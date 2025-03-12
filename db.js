@@ -16,4 +16,6 @@ const db = mysql.createPool({
 //     console.log('Connected to mysql database')
 // });
 
+console.log('Connected to mysql db')
+
 module.exports = db;
