@@ -128,7 +128,7 @@ router.get('/saved', authenticateToken, async (req, res) => {
             return res.status(400).json({ message: 'No recipes found'})
         }
 
-        const recipes = result.map(recipe => ({
+        const recipes = result.rows.map(recipe => ({
             ...recipe,
             ingredients: JSON.parse(recipe.ingredients)
         }));
