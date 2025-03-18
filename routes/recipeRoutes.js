@@ -112,27 +112,58 @@ router.post('/save', authenticateToken, async (req, res) => {
     
 })
 
-router.get('/saved', authenticateToken, (req, res) => {
-    const userId = req.user.userId;
-    db.query('SELECT * FROM saved_recipes WHERE user_id = ?', [userId], (err, result) => {
-        if(err) return res.status(500).json({ message: err.message });
+router.get('/saved', authenticateToken, async (req, res) => {
+
+    try{
+        const userId = req.user.userId;
+
+        const query = `
+            SELECT * FROM saved_recipes
+            WHERE user_id = $1;
+            `;
+
+        const result = await pool.query(query, [userId])
+
+        if (result.rowCount === 0) {
+            return res.status(400).json({ message: 'No recipes found'})
+        }
+
         const recipes = result.map(recipe => ({
             ...recipe,
             ingredients: JSON.parse(recipe.ingredients)
         }));
+
         res.render('pages/savedRecipes', { title: "Saved Recipes", page: 'savedRecipes', recipes });
-    } )
+    } catch (err){
+        console.error('An error occurred:', err)
+        res.status(500).json({ message: err.message})
+    }
 })
 
-router.delete('/delete/:id', authenticateToken, (req, res) => {
-    const userId = req.user.userId;
-    const recipeId = req.params.id;
+router.delete('/delete/:id', authenticateToken, async (req, res) => {
 
-    db.query('DELETE FROM saved_recipes WHERE user_id = ? AND id = ?', [userId, recipeId], (err, result) => {
-        if(err) return res.status(500).json({ error: err.message});
-        console.log('Recipe deleted')
+    try {
+        const userId = req.user.userId;
+        const recipeId = req.params.id;
+
+        const query = `
+            DELETE FROM saved_recipes
+            WHERE user_id = $1 AND id = $2
+            RETURNING *;
+        `;
+
+        const result = await pool.query(query, [userId, recipeId]);
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ message: 'Recipe not found or unauthorized'});
+        }
+
+        console.log('Recipe deleted:', result.rows[0]);
         res.json({ success: true });
-    })
+    } catch (err) {
+        console.error('Error deleting recipe:', err.message);
+        res.status(500).json({ error: err.message });
+    }   
 })
 
 router.get('/logout', (req, res) => {
