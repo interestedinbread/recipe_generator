@@ -80,26 +80,36 @@ router.get('/results', authenticateToken, (req, res) => {
     res.render('pages/results', {title: 'Results Page', page: 'results', mealType})
 })
 
-router.post('/save', authenticateToken, (req, res) => {
-    let { title, ingredients, time_required, instructions } = req.body.recipe;
-    const userId = req.user.userId
+router.post('/save', authenticateToken, async (req, res) => {
 
-    if(!userId || !title || !ingredients || !time_required || !instructions){
-        return res.status(400).json({ message: "Missing request parameter" })
-    }
+    try {
+        let { title, ingredients, time_required, instructions } = req.body.recipe;
+        const userId = req.user.userId
 
-    if(Array.isArray(ingredients)){
-        ingredients = JSON.stringify(ingredients);
-    }
-
-    db.query('INSERT INTO saved_recipes (user_id, title, ingredients, time_required, instructions) VALUES (?, ?, ?, ?, ?)',
-        [userId, title, ingredients, time_required, instructions],
-        (err, result) => {
-            if(err) return res.status(500).json({ message: err.message })
-            console.log('recipe saved!')
-            res.json({ success: true });
+        if(!userId || !title || !ingredients || !time_required || !instructions){
+            return res.status(400).json({ message: "Missing request parameter" })
         }
-    )
+
+        if(Array.isArray(ingredients)){
+            ingredients = JSON.stringify(ingredients);
+        }
+
+        const query = `
+            INSERT INTO saved_recipes (user_id, title, ingredients, time_required, instructions)
+            VALUES ($1, $2, $3, $4, $5) RETURNING *;
+        `;
+
+        const values = [userId, title, ingredients, time_required, instructions];
+
+        const result = await pool.query(query, values);
+        console.log('Recipe saved:', result.rows[0]);
+
+        res.json({ success: true, savedRecipe: result.rows[0] })
+    } catch (err) {
+        console.error('Error saving recipe', err)
+        res.status(500).json({ message: err.message })
+    } 
+    
 })
 
 router.get('/saved', authenticateToken, (req, res) => {
