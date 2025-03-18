@@ -1,6 +1,6 @@
 const express = require('express');
 const OpenAi = require('openai');
-const db = require('../db');
+const pool = require('../db');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
